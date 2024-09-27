@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using System.Linq;
+using static CardEffectDefine;
 
 /// <summary>
 /// カード処理クラス
@@ -222,6 +223,12 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         // StartZoneで実行したい処理をここに書きます
         Debug.Log("StartZoneの処理");
+
+        foreach (CardEffectDefine effect in baseCardData.effectList)
+        {
+            ApplyEffect(effect);
+        }
+
     }
 
 
@@ -323,6 +330,38 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         fieldManager.EndDragging();
     }
+
+    #endregion
+
+
+    #region カード効果処理
+    private void ApplyEffect(CardEffectDefine effect)
+    {
+        switch (effect.cardEffect)
+        {
+            case CardEffectDefine.CardEffect.Damage:
+                DealDamage(effect.value);
+                break;
+
+            case CardEffectDefine.CardEffect.WeaponDmg:
+                DealWeaponDamage(effect.value);
+                break;
+
+            case CardEffectDefine.CardEffect.Heal:
+                Heal(effect.value);
+                break;
+
+            default:
+                Debug.LogWarning("未定義のカード効果です: " + effect.cardEffect);
+                break;
+        }
+    }
+
+    public void DealDamage(int damage) { /* ダメージ処理 */ }
+
+    public void DealWeaponDamage(int weaponDamage) { /* 武器ダメージ処理 */ }
+
+    public void Heal(int healAmount) { /* 回復処理 */ }
 
     #endregion
 }

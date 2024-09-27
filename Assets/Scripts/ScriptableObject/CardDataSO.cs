@@ -19,11 +19,11 @@ public class CardDataSO : ScriptableObject
 
     [Header("アイコン")]
     public Sprite iconSprite;
-    
  
     [Header("効果リスト")]
     [SerializeField] public List<CardEffectDefine> effectList = new List<CardEffectDefine>();
 
     [Header("強度")]
     public int force;
+
 }
